@@ -17,7 +17,7 @@ ONLINE_AFTER_SEC = "90"
 [[d1_databases]]
 binding = "DB"
 database_name = "edgelock"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "d6854fed-b873-4b05-8322-32682a18613e"
 
 # 部署前执行：
 #   npx wrangler d1 create edgelock        # 拿到 database_id 填上面
