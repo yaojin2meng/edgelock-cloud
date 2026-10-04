@@ -42,7 +42,7 @@ async function pbkdf2(password, salt, iterations) {
   return new Uint8Array(bits);
 }
 
-export async function hashPassword(password, iterations = 150000) {
+export async function hashPassword(password, iterations = 100000) {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const hash = await pbkdf2(password, salt, iterations);
   return `pbkdf2$${iterations}$${b64(salt)}$${b64(hash)}`;
@@ -52,7 +52,7 @@ export async function verifyPassword(password, stored) {
   const parts = String(stored || '').split('$');
   if (parts.length !== 4 || parts[0] !== 'pbkdf2') return false;
   const iterations = parseInt(parts[1], 10);
-  if (!Number.isFinite(iterations) || iterations < 1000 || iterations > 1000000) return false;
+  if (!Number.isFinite(iterations) || iterations < 1000 || iterations > 100000) return false;
   try {
     const salt = unb64(parts[2]);
     const expect = unb64(parts[3]);
