@@ -1,0 +1,25 @@
+name = "edgelock-cloud"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+# 自定义域名：部署后在 CF 面板给该 Worker 绑定 sbtx.yaojin.online
+# 或启用下面的 routes（需 zone 已在本账号托管）
+# routes = [
+#   { pattern = "sbtx.yaojin.online/*", zone_name = "yaojin.online" }
+# ]
+
+[vars]
+# 管理面板地址（客户端上报基址），可用 EDGELOCK_SERVER 环境变量在客户端覆盖
+SERVER_NAME = "sbtx.yaojin.online"
+# 设备在线判定：超过该秒数未上报视为离线
+ONLINE_AFTER_SEC = "90"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "edgelock"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# 部署前执行：
+#   npx wrangler d1 create edgelock        # 拿到 database_id 填上面
+#   npm run migrate                        # 建表
+#   npx wrangler secret put DEVICE_KEY     # 设备共享密钥（客户端默认值见 cloud.go，可自定义）
