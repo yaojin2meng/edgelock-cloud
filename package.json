@@ -2,6 +2,7 @@
   "name": "edgelock-cloud",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "edgelock 云控服务（Cloudflare Workers + D1）",
   "scripts": {
     "dev": "wrangler dev",
@@ -11,5 +12,8 @@
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
+  },
+  "dependencies": {
+    "@cloudflare/workerd-windows-64": "^1.20260926.1"
   }
 }

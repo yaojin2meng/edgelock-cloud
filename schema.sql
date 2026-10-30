@@ -17,6 +17,12 @@ CREATE TABLE IF NOT EXISTS devices (
   device_id TEXT PRIMARY KEY,
   hostname TEXT NOT NULL DEFAULT '',
   status TEXT NOT NULL DEFAULT 'unknown',
+  group_name TEXT NOT NULL DEFAULT '',
+  ban TEXT NOT NULL DEFAULT '',
+  sites TEXT NOT NULL DEFAULT '',
+  unlock_req TEXT NOT NULL DEFAULT '',
+  hits_total INTEGER NOT NULL DEFAULT 0,
+  hits TEXT NOT NULL DEFAULT '',
   version TEXT NOT NULL DEFAULT '',
   note TEXT NOT NULL DEFAULT '',
   last_seen INTEGER NOT NULL DEFAULT 0,
@@ -41,9 +47,9 @@ CREATE INDEX IF NOT EXISTS idx_presence_day ON presence (day);
 CREATE TABLE IF NOT EXISTS commands (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   device_id TEXT NOT NULL,
-  type TEXT NOT NULL CHECK (type IN ('lock','restore','setpass')),
+  type TEXT NOT NULL,
   arg TEXT NOT NULL DEFAULT '',
-  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','delivered','done','failed')),
+  status TEXT NOT NULL DEFAULT 'pending',
   result TEXT NOT NULL DEFAULT '',
   created_at INTEGER NOT NULL DEFAULT (strftime('%s','now')),
   updated_at INTEGER NOT NULL DEFAULT (strftime('%s','now'))
@@ -58,3 +64,4 @@ CREATE TABLE IF NOT EXISTS settings (
 );
 
 INSERT OR IGNORE INTO settings (key, value) VALUES ('unlock_password', '9178');
+-- 拦截页默认内容与分组封禁/分组更新配置由 src/migrate.js 首次请求时写入
